@@ -3,7 +3,7 @@ module RecordCache
     attr_accessor :store
 
     def initialize(store)
-      raise "Must be an ActiveSupport::Cache::Store" unless store.is_a?(ActiveSupport::Cache::Store)
+      raise "Must be an ActiveSupport::Cache::Store" unless store.is_a?(ActiveSupport::Cache::Store) || store.is_a?(ActiveSupport::Cache::DalliStore)
       @store = store
     end
 
