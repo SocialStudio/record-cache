@@ -20,7 +20,7 @@ module RecordCache
         # add cache invalidation hooks on initialization
         def record_cache_init
           after_commit :record_cache_destroy,  :on => :create
-          after_commit :record_cache_update,  :on => :update
+          after_commit :record_cache_destroy,  :on => :update
           after_commit :record_cache_destroy, :on => :destroy
           define_callbacks :cache_write
         end
