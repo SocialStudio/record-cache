@@ -46,11 +46,11 @@ module RecordCache
           cacheable ? record_cache.fetch(query) : find_by_sql_without_record_cache(*args)
         end
         
-        def transaction_with_record_cache(options = {}, &block)
-          RecordCache::Base.without_record_cache do
-            transaction_without_record_cache(options, &block)
-          end
-        end
+      #  def transaction_with_record_cache(options = {}, &block)
+      #    RecordCache::Base.without_record_cache do
+      #      transaction_without_record_cache(options, &block)
+      #    end
+      #  end
         
       end
 
