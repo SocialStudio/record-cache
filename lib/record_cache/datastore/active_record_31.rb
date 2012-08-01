@@ -8,7 +8,7 @@ module RecordCache
           klass.class_eval do
             class << self
               alias_method_chain :find_by_sql, :record_cache
-              alias_method_chain :transaction, :record_cache
+      #        alias_method_chain :transaction, :record_cache
             end
           end
           include InstanceMethods
@@ -46,11 +46,11 @@ module RecordCache
           cacheable ? record_cache.fetch(query) : find_by_sql_without_record_cache(*args)
         end
         
-        def transaction_with_record_cache(options = {}, &block)
-          RecordCache::Base.without_record_cache do
-            transaction_without_record_cache(options, &block)
-          end
-        end
+      #  def transaction_with_record_cache(options = {}, &block)
+      #    RecordCache::Base.without_record_cache do
+      #      transaction_without_record_cache(options, &block)
+      #    end
+      #  end
         
       end
 
