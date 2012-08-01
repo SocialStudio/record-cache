@@ -31,14 +31,12 @@ module RecordCache
         if action == :destroy
           remove_from_index(record.send(@attribute), record.id)
         elsif action == :create
-          remove_from_index(record.send(@attribute), record.id)
-          #add_to_index(record.send(@attribute), record.id)
+          add_to_index(record.send(@attribute), record.id)
         else
-          remove_from_index(record.send(@attribute), record.id)
-          #index_change = record.previous_changes[@attribute.to_s]
-          #return unless index_change
-          #remove_from_index(index_change[0], record.id)
-          #add_to_index(index_change[1], record.id)
+          index_change = record.previous_changes[@attribute.to_s]
+          return unless index_change
+          remove_from_index(index_change[0], record.id)
+          add_to_index(index_change[1], record.id)
         end
       end
 
