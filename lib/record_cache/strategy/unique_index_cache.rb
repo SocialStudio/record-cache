@@ -27,6 +27,8 @@ module RecordCache
         UniqueIndexCache.attributes(base) << attribute
         # for unique indexes that are not on the :id column, use key: rc/<key or model name>/<attribute>:
         @cache_key_prefix << "#{attribute}:" unless attribute == :id
+        #reinitialize the table version after super to account for prefix changes
+        @table_version = (version_store.current(@cache_key_prefix) || version_store.renew(@cache_key_prefix))  
         @type = type
       end
 
