@@ -41,13 +41,17 @@ module RecordCache
       # Update the version store and the record store
       def record_change(record, action)
         key = cache_key(record.send(@attribute))
-        if action == :destroy
-          version_store.delete(key)
-        else
+# Just delete from cache, this is causing issues with various ways the record is updated.
+        version_store.delete(key)
+
+# If we allow this to rewrite the record to cache its not getting anything thats updated by callbacks
+#        if action == :destroy
+#          version_store.delete(key)
+#        else
           # update the version store and add the record to the cache
-          new_version = version_store.increment(key)
-          record_store.write(versioned_key(key, new_version), Util.serialize(record))
-        end
+#          new_version = version_store.increment(key)
+#          record_store.write(versioned_key(key, new_version), Util.serialize(record))
+#        end
       end
 
       # Handle invalidation call
