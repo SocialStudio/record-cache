@@ -66,7 +66,7 @@ module RecordCache
     # @param action one of :create, :update or :destroy
     def record_change(record, action)
       # skip unless something has actually changed
-      return if action == :update && record.previous_changes.empty?
+      #return if action == :update && record.previous_changes.empty?
       # dispatch the record change to all known strategies
       @strategy_by_attribute.values.each { |strategy| strategy.record_change(record, action) }
       record.send(:notify_observers, :after_cache_write)

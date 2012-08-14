@@ -229,8 +229,9 @@ module RecordCache
       alias :visit_Arel_Nodes_In                 :visit_Arel_Nodes_Equality
 
       def visit_Arel_Nodes_And o
-        visit(o.left)
-        visit(o.right)
+        o.children.map {|x| visit x }
+        #visit(o.left)
+        #visit(o.right)
       end
 
       alias :visit_Arel_Nodes_Or                 :not_cacheable
