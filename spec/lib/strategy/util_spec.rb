@@ -29,7 +29,7 @@ describe RecordCache::Strategy::Util do
       subject.filter!(apples, :name => "Adams Apple 1")
       apples.should == [Apple.find_by_name("Adams Apple 1")]
     end
-
+    
     it "should return empty array when filter does not match any record" do
       apples = Apple.where(:id => [1,2]).all
       subject.filter!(apples, :name => "Adams Apple Pie")
@@ -62,6 +62,20 @@ describe RecordCache::Strategy::Util do
       people.map(&:name).sort.should == ["Blue", "Cris"]
     end
 
+    it "should filter on numeric and numeric-like-string comparison" do
+      people = Person.where(:id => [1,2,3]).all
+      subject.filter!(people, :id => '2')
+      people.size.should == 1
+      people.first.id.should == 2
+    end
+
+    it "should filter on array of numeric and numeric-like-string comparison" do
+      people = Person.where(:id => [1,2,3]).all
+      subject.filter!(people, :id => [1, '2'])
+      people.size.should == 2
+      people.map(&:id).sort.should == [1, 2]
+    end
+    
     it "should filter on arrays" do
       apples = Apple.where(:id => [1,2,8,9])
       subject.filter!(apples, :store_id => [2, 4])

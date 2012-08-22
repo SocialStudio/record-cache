@@ -29,11 +29,29 @@ module RecordCache
           wheres.each_pair do |attr, value|
             attr = attr.to_sym
             if value.is_a?(Array)
-              records.reject! { |record| !value.include?(record.send(attr)) }
+              records.reject! { |record|
+                rv = record.send(attr)
+                if rv.is_a?(Numeric)
+                  value.each { |fv| return false if numeric_equality(rv, fv) }
+                  true
+                else
+                  !value.include?(record.send(attr))
+                end
+              }
             else
-              records.reject! { |record| record.send(attr) != value }
+              records.reject! { |record| !numeric_equality(record.send(attr), value) }
             end
           end
+        end
+        
+        def numeric_equality(a, b)
+          if a.is_a?(String)
+            a = a.to_d if Float(a) rescue nil
+          end
+          if b.is_a?(String)
+            b = b.to_d if Float(b) rescue nil
+          end
+          a == b
         end
 
         # Sort the cached records in memory, similar to MySql sorting rules including collatiom
