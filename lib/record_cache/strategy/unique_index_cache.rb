@@ -15,7 +15,7 @@ module RecordCache
         return nil if attributes.empty?
         attributes.map do |attribute|
           type = base.columns_hash[attribute.to_s].try(:type)
-          raise "No column found for unique index '#{index}' on #{base.name}." unless type
+          raise "No column found for unique index '#{attribute.to_s}' on #{base.name}." unless type
           raise "Incorrect type (expected string or integer, found #{type}) for unique index '#{attribute}' on #{base.name}." unless type == :string || type == :integer
           UniqueIndexCache.new(base, attribute, record_store, options, type)
         end
