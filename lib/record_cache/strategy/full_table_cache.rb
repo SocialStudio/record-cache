@@ -15,7 +15,7 @@ module RecordCache
       end
 
       # Clear the cache on any record change
-      def record_change(record, action)
+      def record_change_impl(record, action)
         version_store.delete(cache_key(FULL_TABLE))
       end
 

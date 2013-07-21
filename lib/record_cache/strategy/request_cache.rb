@@ -21,7 +21,7 @@ module RecordCache
       end
 
       # Handle record change
-      def record_change(record, action)
+      def record_change_impl(record, action)
         @@request_store.delete(@base.name)
       end
 

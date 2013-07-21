@@ -45,9 +45,14 @@ module RecordCache
 
       # Handle create/update/destroy (use record.previous_changes to find the old values in case of an update)
       def record_change(record, action)
+        @table_version = (version_store.current(@cache_key_prefix) || version_store.renew(@cache_key_prefix))
+        record_change_impl(record, action)
+      end
+      
+      def record_change_impl(record, action)
         raise NotImplementedError
       end
-
+      
       # Handle invalidation call
       def invalidate(id)
         raise NotImplementedError

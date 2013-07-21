@@ -27,7 +27,7 @@ module RecordCache
       end
 
       # Handle create/update/destroy (use record.previous_changes to find the old values in case of an update)
-      def record_change(record, action)
+      def record_change_impl(record, action)
         if action == :destroy
           remove_from_index(record.send(@attribute), record.id)
         elsif action == :create

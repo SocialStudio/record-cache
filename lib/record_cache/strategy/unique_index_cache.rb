@@ -39,7 +39,7 @@ module RecordCache
       end
 
       # Update the version store and the record store
-      def record_change(record, action)
+      def record_change_impl(record, action)
         key = cache_key(record.send(@attribute))
 # Just delete from cache, this is causing issues with various ways the record is updated.
         version_store.delete(key)
