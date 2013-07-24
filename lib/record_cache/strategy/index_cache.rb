@@ -17,7 +17,7 @@ module RecordCache
 
       def initialize(base, attribute, record_store, options)
         super
-        @index_cache_key_prefix = cache_key(attribute) # "/rc/<model>/<attribute>"
+        @index_cache_attribute = attribute
       end
 
       # Can the cache retrieve the records based on this query?
@@ -77,7 +77,7 @@ module RecordCache
   
       # key to retrieve the ids for a given value
       def index_cache_key(value)
-        "#{@index_cache_key_prefix}=#{value}"
+        "#{cache_key(@index_cache_attribute)}=#{value}" # "/rc/<model>/<attribute>=<value>"
       end
   
       # Retrieve the ids from the local cache
